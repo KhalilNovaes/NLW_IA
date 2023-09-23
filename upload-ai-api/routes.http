@@ -1,0 +1,42 @@
+#   @name get-prompts
+GET http://localhost:3333/prompts
+
+
+###
+
+# @name upload
+
+POST http://localhost:3333/videos
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="file"; filename="VEIGH - Novo Balanço (Clipe Oficial) I Ecoando Amazon Music.mp3"
+Content-Type: audio/mpeg
+
+< ./VEIGH - Novo Balanço (Clipe Oficial) I Ecoando Amazon Music.mp3
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+###
+
+# @name create-transcription
+
+POST http://localhost:3333/videos/6c44ec27-aacd-44b6-be1a-367f84cfce73/transcription
+Content-Type: application/json
+
+{
+    "prompt": "novo balanço, musica"
+}
+
+
+###
+
+# @name generate-ai-completion
+
+POST http://localhost:3333/ai/complete
+Content-Type: application/json
+
+{
+    "videoId": "6c44ec27-aacd-44b6-be1a-367f84cfce73",
+    "temperature": 0.5,
+    "template": "Gere um resumo sucinto da transcrição do video informada a seguir: '''{transcription}'''"
+}
